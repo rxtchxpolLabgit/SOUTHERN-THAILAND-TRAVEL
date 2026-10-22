@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, computed, ElementRef, OnDestroy, signal, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, computed, ElementRef, inject, OnDestroy, signal, ViewChild, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import * as L from 'leaflet';
@@ -6,6 +6,8 @@ import { applyImageFallback } from '../../../../shared/data/images.data';
 import { distanceKilometers } from '../../../../shared/data/geo.utils';
 import { destinations, type AndamanPlace } from '../../../../shared/data/places.data';
 import { LiveWeatherComponent } from '../components/live-weather.component';
+import { LanguageService } from '../core/language.service';
+import { placeCategory, placeName, provinceName } from '../../../../shared/data/localization.data';
 
 @Component({
   selector: 'app-interactive-map',
@@ -16,6 +18,8 @@ import { LiveWeatherComponent } from '../components/live-weather.component';
   encapsulation: ViewEncapsulation.None,
 })
 export class InteractiveMapPage implements AfterViewInit, OnDestroy {
+  private readonly languageService = inject(LanguageService);
+  protected readonly language = this.languageService.language;
   @ViewChild('mapCanvas', { static: true }) private mapCanvas!: ElementRef<HTMLDivElement>;
 
   protected readonly destinations = destinations;
@@ -24,6 +28,22 @@ export class InteractiveMapPage implements AfterViewInit, OnDestroy {
     () => destinations.find((place) => place.id === this.selectedPlaceId()) ?? destinations[0],
   );
   protected readonly mapError = signal('');
+
+  protected text(english: string, thai: string): string {
+    return this.language() === 'th' ? thai : english;
+  }
+
+  protected localizedName(name: string): string {
+    return placeName(name, this.language());
+  }
+
+  protected localizedProvince(name: string): string {
+    return provinceName(name, this.language());
+  }
+
+  protected localizedCategory(name: string): string {
+    return placeCategory(name, this.language());
+  }
 
   private map?: L.Map;
   private resizeObserver?: ResizeObserver;

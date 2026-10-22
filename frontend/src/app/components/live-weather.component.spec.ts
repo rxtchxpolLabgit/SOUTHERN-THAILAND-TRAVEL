@@ -63,9 +63,12 @@ describe('LiveWeatherComponent', () => {
     expect(content.querySelector('a[href="https://open-meteo.com/"]')).toBeTruthy();
   });
 
-  it('shows an explicit unavailable state and retries on request', () => {
+  it('falls back to Open-Meteo when the backend is unavailable and retries', () => {
     fixture.detectChanges();
     http.expectOne(`${environment.apiUrl}/api/weather?destination=phi-phi`)
+      .flush({}, { status: 502, statusText: 'Bad Gateway' });
+    http.expectOne((request) => request.url === 'https://marine-api.open-meteo.com/v1/marine').flush({});
+    http.expectOne((request) => request.url === 'https://api.open-meteo.com/v1/forecast')
       .flush({}, { status: 502, statusText: 'Bad Gateway' });
     fixture.detectChanges();
     expect((fixture.nativeElement as HTMLElement).textContent).toContain('Weather information unavailable');
@@ -83,6 +86,9 @@ describe('LiveWeatherComponent', () => {
       destination: 'Phi Phi Islands',
       temperature: 29,
     });
+    http.expectOne((request) => request.url === 'https://marine-api.open-meteo.com/v1/marine').flush({});
+    http.expectOne((request) => request.url === 'https://api.open-meteo.com/v1/forecast')
+      .flush({}, { status: 502, statusText: 'Bad Gateway' });
     fixture.detectChanges();
     expect((fixture.nativeElement as HTMLElement).textContent).toContain('Weather information unavailable');
   });

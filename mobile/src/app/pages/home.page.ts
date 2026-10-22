@@ -25,6 +25,7 @@ import {
   responsiveImageSrcset,
 } from '../../../../shared/data/images.data';
 import { provinceProfiles } from '../../../../shared/data/places.data';
+import { southernProvinces } from '../../../../shared/data/provinces.data';
 import { getLocalRecommendations, type RecommendationMatch } from '../../../../shared/data/recommendations.data';
 import { andamanVideos, AndamanVideo, youtubeEmbedUrl } from '../../../../shared/data/videos.data';
 import { FavoritesService } from '../core/favorites.service';
@@ -69,6 +70,7 @@ export class HomePage {
     placeCount: destinations.filter((place) => place.province === profile.province).length,
   }));
   protected readonly interests = seasons;
+  protected readonly provinces = southernProvinces;
   protected readonly selectedRecommendationInterests = signal<string[]>(['Beach', 'Diving']);
   protected readonly recommendationMatches = signal<RecommendationMatch[]>([]);
   protected readonly recommendationsLoading = signal(false);

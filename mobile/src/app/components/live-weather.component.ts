@@ -5,6 +5,7 @@ import { EMPTY, Subject, catchError, switchMap, tap } from 'rxjs';
 import { WeatherReport } from '../../../../shared/data/weather.data';
 import { destinations } from '../../../../shared/data/places.data';
 import { WeatherApiService } from '../core/weather-api.service';
+import { placeName, provinceName as localizedProvinceName } from '../../../../shared/data/localization.data';
 
 @Component({
   selector: 'app-live-weather',
@@ -17,6 +18,31 @@ export class LiveWeatherComponent implements OnChanges {
   @Input({ required: true }) destinationId = '';
   @Input() compact = false;
   @Input() provinceOptions: readonly string[] = [];
+  @Input() language: 'en' | 'th' = 'en';
+
+  protected text(english: string, thai: string): string {
+    return this.language === 'th' ? thai : english;
+  }
+
+  protected provinceName(province: string): string {
+    return localizedProvinceName(province, this.language);
+  }
+
+  protected destinationName(name: string): string {
+    return placeName(name, this.language);
+  }
+
+  protected conditionName(condition: string): string {
+    if (this.language !== 'th') return condition;
+    const translations: Record<string, string> = {
+      'Clear sky': 'ท้องฟ้าแจ่มใส', 'Mainly clear': 'ท้องฟ้าโปร่งเป็นส่วนใหญ่', 'Partly cloudy': 'มีเมฆบางส่วน',
+      'Overcast': 'มีเมฆมาก', 'Fog': 'มีหมอก', 'Depositing rime fog': 'มีหมอกและน้ำค้างแข็ง',
+      'Drizzle': 'ฝนละออง', 'Freezing drizzle': 'ฝนละอองเยือกแข็ง', 'Rain': 'ฝนตก', 'Freezing rain': 'ฝนเยือกแข็ง',
+      'Snow fall': 'หิมะตก', 'Snow grains': 'เกล็ดหิมะ', 'Rain showers': 'ฝนตกเป็นช่วง', 'Snow showers': 'หิมะตกเป็นช่วง',
+      'Thunderstorm': 'พายุฝนฟ้าคะนอง', 'Thunderstorm with hail': 'พายุฝนฟ้าคะนองและลูกเห็บ',
+    };
+    return translations[condition] ?? condition;
+  }
 
   protected readonly report = signal<WeatherReport | null>(null);
   protected readonly loading = signal(true);

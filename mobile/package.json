@@ -11,7 +11,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "cap:sync": "cap sync",
-    "android:sync": "npm run build && cap sync android",
+    "android:sync": "npm run build -- --configuration production && cap sync android",
     "android:open": "cap open android"
   },
   "private": true,

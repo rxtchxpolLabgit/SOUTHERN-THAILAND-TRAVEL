@@ -9,6 +9,9 @@ import type { BoatRoute } from '../../../../shared/data/boat-routes.data';
 import { FavoritesService } from '../core/favorites.service';
 import { LiveWeatherComponent } from '../components/live-weather.component';
 import { BoatRoutesApiService } from '../core/boat-routes-api.service';
+import { TripPlanService } from '../core/trip-plan.service';
+import { LanguageService } from '../core/language.service';
+import { placeCategory, placeDescription, placeName, provinceName } from '../../../../shared/data/localization.data';
 
 type BoatRoutesResult = { routes: BoatRoute[] } | { error: true };
 
@@ -25,6 +28,10 @@ export class PlaceDetailPage {
   private readonly boatRoutesApi = inject(BoatRoutesApiService);
   private readonly retryBoatRouteRequests = new Subject<string>();
   protected readonly favoritesService = inject(FavoritesService);
+  protected readonly tripPlanService = inject(TripPlanService);
+  private readonly languageService = inject(LanguageService);
+  protected readonly language = this.languageService.language;
+  protected readonly tripAdded = signal(false);
   private touchStartX = 0;
   private readonly placeId = toSignal(
     this.route.paramMap.pipe(map((params) => params.get('id'))),
@@ -49,6 +56,43 @@ export class PlaceDetailPage {
   protected readonly boatRoutesLoading = signal(false);
   protected readonly boatRoutesError = signal(false);
   protected readonly homeLink: string = this.route.snapshot.data['homeLink'];
+
+  protected text(english: string, thai: string): string {
+    return this.language() === 'th' ? thai : english;
+  }
+
+  protected localizedName(name: string): string {
+    return placeName(name, this.language());
+  }
+
+  protected localizedProvince(name: string): string {
+    return provinceName(name, this.language());
+  }
+
+  protected localizedCategory(name: string): string {
+    return placeCategory(name, this.language());
+  }
+
+  protected localizedDescription(name: string, description: string): string {
+    return placeDescription(name, description, this.language());
+  }
+
+  protected localizedActivity(activity: string): string {
+    if (this.language() !== 'th') return activity;
+    return ({
+      Beach: 'ชายหาด', Diving: 'ดำน้ำ', Photography: 'ถ่ายภาพ', 'Island Hopping': 'เที่ยวเกาะ',
+      Nature: 'ธรรมชาติ', Adventure: 'ผจญภัย', Relax: 'พักผ่อน', Food: 'อาหาร', Sunset: 'ชมพระอาทิตย์ตก',
+      Culture: 'วัฒนธรรม', Architecture: 'สถาปัตยกรรม', Swimming: 'ว่ายน้ำ', Sunrise: 'ชมพระอาทิตย์ขึ้น',
+      Snorkeling: 'ดำน้ำตื้น', Hiking: 'เดินป่า', Viewpoint: 'ชมวิว', 'Boat Tour': 'ล่องเรือ',
+      Community: 'ชุมชน', History: 'ประวัติศาสตร์', Wellness: 'สุขภาพ', Wildlife: 'สัตว์ป่า', Walking: 'เดินเที่ยว',
+      Kayaking: 'พายเรือคายัก', 'Road Trip': 'เดินทางโดยรถ',
+    } as Record<string, string>)[activity] ?? activity;
+  }
+
+  protected addToTrip(id: string): void {
+    this.tripPlanService.addStop(id);
+    this.tripAdded.set(true);
+  }
 
   constructor() {
     merge(
