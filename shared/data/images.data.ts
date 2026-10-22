@@ -371,7 +371,7 @@ export const imageAssets = {
     photographer: 'Lamacchiacosta', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
   },
   sichonBeach: {
-    url: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/Ao_Thong_Not.jpg/960px-Ao_Thong_Not.jpg',
+    url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Ao_Thong_Not.jpg?width=960',
     alt: 'Beach at Ao Thong Not in Sichon, Nakhon Si Thammarat', source: 'Wikimedia Commons',
     sourceUrl: 'https://commons.wikimedia.org/wiki/File:Ao_Thong_Not.jpg',
     photographer: 'Ahoerstemeier', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
