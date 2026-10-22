@@ -155,6 +155,10 @@ export class HomePage {
     this.recommendationRequests.next(this.selectedRecommendationInterests());
   }
 
+  protected exploreDestinations(): void {
+    document.getElementById('provinces')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
   protected selectProvince(province: AndamanProvince): void {
     this.selectedProvince.update((selected) => selected === province ? 'All' : province);
     document.getElementById('recommendations')?.scrollIntoView({ behavior: 'smooth' });
