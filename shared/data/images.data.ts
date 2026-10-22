@@ -370,11 +370,23 @@ export const imageAssets = {
     sourceUrl: 'https://commons.wikimedia.org/wiki/File:Thung_Wua_Laen_beach_-_Chumphon.jpg',
     photographer: 'Lamacchiacosta', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
   },
-  khanom: {
-    url: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d6/Khanom_District%2C_Nakhon_Si_Thammarat%2C_Thailand_-_panoramio.jpg/960px-Khanom_District%2C_Nakhon_Si_Thammarat%2C_Thailand_-_panoramio.jpg',
-    alt: 'Coast in Khanom District, Nakhon Si Thammarat', source: 'Wikimedia Commons',
-    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Khanom_District,_Nakhon_Si_Thammarat,_Thailand_-_panoramio.jpg',
-    photographer: 'Kitti Lekakul', license: 'CC BY 3.0', licenseUrl: 'https://creativecommons.org/licenses/by/3.0/',
+  sichonBeach: {
+    url: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/Ao_Thong_Not.jpg/960px-Ao_Thong_Not.jpg',
+    alt: 'Beach at Ao Thong Not in Sichon, Nakhon Si Thammarat', source: 'Wikimedia Commons',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Ao_Thong_Not.jpg',
+    photographer: 'Ahoerstemeier', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+  },
+  hinNgamBay: {
+    url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Ao_Hin_Ngam_Sichon.jpg?width=960',
+    alt: 'Hin Ngam Bay in Sichon, Nakhon Si Thammarat', source: 'Wikimedia Commons',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Ao_Hin_Ngam_Sichon.jpg',
+    photographer: 'Ahoerstemeier', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+  },
+  sichonCoast: {
+    url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Locals_Enjoying_a_Sunday_Holiday.jpg?width=960',
+    alt: 'Beach at Prasarnsook Resort in Sichon, Nakhon Si Thammarat', source: 'Wikimedia Commons',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Locals_Enjoying_a_Sunday_Holiday.jpg',
+    photographer: 'Christopher David Robin Williams', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
   },
   khaoOkThalu: {
     url: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c4/Khao_Ok_Thalu_and_Phatthalung.JPG/960px-Khao_Ok_Thalu_and_Phatthalung.JPG',
