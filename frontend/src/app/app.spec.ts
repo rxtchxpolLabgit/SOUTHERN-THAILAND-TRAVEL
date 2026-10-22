@@ -106,6 +106,24 @@ describe('App', () => {
     expect(navigation?.classList.contains('is-open')).toBe(false);
   });
 
+  it('scrolls to the selected section when a navigation link is tapped', async () => {
+    history.replaceState(null, '', '/');
+    const originalScrollTo = window.scrollTo;
+    const scrollTo = vi.fn();
+    Object.defineProperty(window, 'scrollTo', { configurable: true, value: scrollTo });
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    compiled.querySelector<HTMLAnchorElement>('#main-navigation a[href="#map"]')?.click();
+
+    expect(scrollTo).toHaveBeenCalledWith({ top: expect.any(Number), behavior: 'smooth' });
+    expect(window.location.hash).toBe('#map');
+    Object.defineProperty(window, 'scrollTo', { configurable: true, value: originalScrollTo });
+    fixture.destroy();
+  });
+
   it('switches the travel discovery interface between English and Thai', async () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();

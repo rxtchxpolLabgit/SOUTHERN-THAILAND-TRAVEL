@@ -1,6 +1,6 @@
 @if (isHome()) {
 <header class="site-header">
-  <a class="brand" href="#" [attr.aria-label]="text('Southern Thailand Travel home', 'หน้าแรกเที่ยวภาคใต้')">
+  <a class="brand" href="#hero-title" (click)="navigateToSection($event, 'hero-title')" [attr.aria-label]="text('Southern Thailand Travel home', 'หน้าแรกเที่ยวภาคใต้')">
     <span class="brand__mark" aria-hidden="true">S</span>
     <span class="brand__name">SOUTHERN <strong>THAILAND TRAVEL</strong></span>
   </a>
@@ -19,12 +19,12 @@
     [class.is-open]="mobileMenuOpen()"
     (keydown.escape)="closeMobileMenuOnEscape($event)"
   >
-    <a href="#recommendations" (click)="closeMobileMenu()">{{ text('Discover', 'ค้นพบ') }}</a>
-    <a href="#provinces" (click)="selectedProvince.set('All'); closeMobileMenu()">{{ text('All cities', 'ทุกจังหวัด') }}</a>
-    <a href="#map" (click)="closeMobileMenu()">{{ text('Explore map', 'แผนที่') }}</a>
-    <a href="#boat-routes" (click)="closeMobileMenu()">{{ text('Boat routes', 'เส้นทางเรือ') }}</a>
+    <a href="#recommendations" (click)="navigateToSection($event, 'recommendations'); closeMobileMenu()">{{ text('Discover', 'ค้นพบ') }}</a>
+    <a href="#provinces" (click)="selectedProvince.set('All'); navigateToSection($event, 'provinces'); closeMobileMenu()">{{ text('All cities', 'ทุกจังหวัด') }}</a>
+    <a href="#map" (click)="navigateToSection($event, 'map'); closeMobileMenu()">{{ text('Explore map', 'แผนที่') }}</a>
+    <a href="#boat-routes" (click)="navigateToSection($event, 'boat-routes'); closeMobileMenu()">{{ text('Boat routes', 'เส้นทางเรือ') }}</a>
     <a routerLink="/events" (click)="closeMobileMenu()">{{ text('Local events', 'กิจกรรมท้องถิ่น') }}</a>
-    <a href="#favorites" (click)="closeMobileMenu()">{{ text('Saved', 'บันทึกไว้') }} ({{ savedPlaces().length }})</a>
+    <a href="#favorites" (click)="navigateToSection($event, 'favorites'); closeMobileMenu()">{{ text('Saved', 'บันทึกไว้') }} ({{ savedPlaces().length }})</a>
   </nav>
   <button class="language-toggle" type="button" [attr.aria-label]="text('Switch to Thai', 'เปลี่ยนเป็นภาษาอังกฤษ')" (click)="toggleLanguage()">{{ language() === 'en' ? 'TH' : 'EN' }}</button>
   @if (authService.session(); as user) {
@@ -71,7 +71,7 @@
       <h1 id="hero-title">{{ text('Explore', 'เที่ยว') }}<br /><em>{{ text('the South', 'ภาคใต้') }}</em></h1>
       <p>{{ text('Discover beaches, islands, local culture and hidden gems across Southern Thailand.', 'ค้นพบชายหาด หมู่เกาะ วัฒนธรรมท้องถิ่น และสถานที่น่าประทับใจทั่วภาคใต้') }}</p>
       <div class="hero__actions">
-        <a class="button button--primary" href="#recommendations">{{ text('Explore', 'เริ่มเที่ยว') }} <span aria-hidden="true">-&gt;</span></a>
+        <a class="button button--primary" href="#recommendations" (click)="navigateToSection($event, 'recommendations')">{{ text('Explore', 'เริ่มเที่ยว') }} <span aria-hidden="true">-&gt;</span></a>
         <button class="button button--glass" type="button" (click)="startTrip()">{{ text('Plan My Trip', 'วางแผนทริป') }} <span aria-hidden="true">-&gt;</span></button>
       </div>
       <label class="search-box">
@@ -82,7 +82,7 @@
           [attr.aria-label]="text('Search destinations, provinces, or activities', 'ค้นหาสถานที่ จังหวัด หรือกิจกรรม')"
           (input)="updateSearch($event)"
         />
-        <a href="#recommendations" [attr.aria-label]="text('See search results', 'ดูผลการค้นหา')">-&gt;</a>
+        <a href="#recommendations" (click)="navigateToSection($event, 'recommendations')" [attr.aria-label]="text('See search results', 'ดูผลการค้นหา')">-&gt;</a>
       </label>
       <div class="hero__footnote"><span class="live-dot"></span> {{ text('14 SOUTHERN PROVINCES · ENDLESS POSSIBILITIES', '14 จังหวัดภาคใต้ · เที่ยวได้ไม่รู้จบ') }}</div>
     </div>
@@ -91,7 +91,7 @@
       · <a [href]="heroImage.licenseUrl" target="_blank" rel="noopener noreferrer">{{ heroImage.license }}</a>
     </div>
     <div class="hero__vertical">{{ text('SOUTHERN THAILAND', 'ภาคใต้ของประเทศไทย') }} <span></span> 6° N — 10° N</div>
-    <a class="hero__scroll" href="#weather"><span>{{ text('SCROLL TO EXPLORE', 'เลื่อนเพื่อสำรวจ') }}</span><i aria-hidden="true">-&gt;</i></a>
+    <a class="hero__scroll" href="#weather" (click)="navigateToSection($event, 'weather')"><span>{{ text('SCROLL TO EXPLORE', 'เลื่อนเพื่อสำรวจ') }}</span><i aria-hidden="true">-&gt;</i></a>
     <div class="hero__counter"><strong>01</strong><span> / 05</span></div>
   </section>
 
@@ -111,7 +111,7 @@
         <h2 id="recommendations-title">{{ text('Recommended', 'แนะนำ') }} <em>{{ text('for you', 'สำหรับคุณ') }}</em></h2>
         <p class="recommendations__hint">{{ text('Choose what you enjoy to personalize your destination ranking.', 'เลือกกิจกรรมที่ชอบเพื่อจัดอันดับสถานที่เที่ยวให้เหมาะกับคุณ') }}</p>
       </div>
-      <a class="text-link" href="#provinces">{{ text('Explore all places', 'ดูสถานที่ทั้งหมด') }} <span aria-hidden="true">-&gt;</span></a>
+      <a class="text-link" href="#provinces" (click)="navigateToSection($event, 'provinces')">{{ text('Explore all places', 'ดูสถานที่ทั้งหมด') }} <span aria-hidden="true">-&gt;</span></a>
     </div>
     <div class="interest-picker" [attr.aria-label]="text('Choose travel interests', 'เลือกความสนใจในการเดินทาง')">
       @for (interest of recommendationInterestOptions; track interest) {
@@ -250,7 +250,7 @@
         <span aria-hidden="true">&#9734;</span>
         <h3>{{ text('No saved places yet', 'ยังไม่มีสถานที่ที่บันทึกไว้') }}</h3>
         <p>{{ text('Tap the heart on a destination to keep it here for your next trip.', 'กดรูปหัวใจบนสถานที่เพื่อบันทึกไว้สำหรับทริปถัดไป') }}</p>
-        <a class="button button--primary" href="#recommendations">{{ text('Explore destinations', 'สำรวจสถานที่') }}</a>
+        <a class="button button--primary" href="#recommendations" (click)="navigateToSection($event, 'recommendations')">{{ text('Explore destinations', 'สำรวจสถานที่') }}</a>
       </div>
     }
   </section>
@@ -613,7 +613,7 @@
 </dialog>
 
 <footer class="site-footer">
-  <a class="brand brand--footer" href="#">
+  <a class="brand brand--footer" href="#hero-title" (click)="navigateToSection($event, 'hero-title')">
     <span class="brand__mark" aria-hidden="true">A</span>
     <span class="brand__name">SOUTHERN <strong>THAILAND TRAVEL</strong></span>
   </a>

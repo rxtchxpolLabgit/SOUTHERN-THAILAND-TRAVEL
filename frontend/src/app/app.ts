@@ -196,7 +196,15 @@ export class App {
         filter((event): event is NavigationEnd => event instanceof NavigationEnd),
         takeUntilDestroyed(),
       )
-      .subscribe((event) => this.isHome.set(!event.urlAfterRedirects.startsWith('/places/') && !event.urlAfterRedirects.startsWith('/events') && !event.urlAfterRedirects.startsWith('/admin/')));
+      .subscribe((event) => {
+        const isHome = !event.urlAfterRedirects.startsWith('/places/') && !event.urlAfterRedirects.startsWith('/events') && !event.urlAfterRedirects.startsWith('/admin/');
+        this.isHome.set(isHome);
+        const fragment = new URL(event.urlAfterRedirects, window.location.origin).hash.slice(1);
+        if (isHome && fragment) this.scrollToSectionAfterRender(fragment);
+      });
+
+    const initialFragment = window.location.hash.slice(1);
+    if (initialFragment) this.scrollToSectionAfterRender(initialFragment);
 
     this.refreshRecommendations();
     this.refreshBoatRoutes();
@@ -214,6 +222,22 @@ export class App {
 
   protected closeMobileMenu(): void {
     this.mobileMenuOpen.set(false);
+  }
+
+  protected navigateToSection(event: MouseEvent, sectionId: string): void {
+    event.preventDefault();
+    history.replaceState(null, '', `${location.pathname}${location.search}#${sectionId}`);
+    this.scrollToSection(sectionId);
+  }
+
+  private scrollToSectionAfterRender(sectionId: string): void {
+    requestAnimationFrame(() => requestAnimationFrame(() => this.scrollToSection(sectionId)));
+  }
+
+  private scrollToSection(sectionId: string): void {
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+    window.scrollTo({ top: section.getBoundingClientRect().top + window.scrollY, behavior: 'smooth' });
   }
 
   protected closeMobileMenuOnEscape(event: Event): void {
@@ -347,7 +371,7 @@ export class App {
   }
 
   protected startTrip(): void {
-    document.getElementById('trip-planner')?.scrollIntoView({ behavior: 'smooth' });
+    this.scrollToSection('trip-planner');
   }
 
   protected addTripStop(event: Event): void {
