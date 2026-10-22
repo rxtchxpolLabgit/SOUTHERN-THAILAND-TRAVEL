@@ -425,9 +425,9 @@ export const imageAssets = {
     photographer: 'Piyawat Chongkaichak', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
   },
   tangKuanHill: {
-    url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Tang_Kuan_Hill,_Thailand.jpg?width=960',
-    alt: 'Tang Kuan Hill, Thailand', source: 'Wikimedia Commons',
-    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Tang_Kuan_Hill,_Thailand.jpg',
+    url: 'https://commons.wikimedia.org/wiki/Special:FilePath/%E0%B8%A2%E0%B8%AD%E0%B8%94%E0%B9%80%E0%B8%82%E0%B8%B2%E0%B8%95%E0%B8%B1%E0%B8%87%E0%B8%81%E0%B8%A7%E0%B8%99_-_panoramio_(1).jpg?width=960',
+    alt: 'Summit of Tang Kuan Hill in Songkhla', source: 'Wikimedia Commons',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:%E0%B8%A2%E0%B8%AD%E0%B8%94%E0%B9%80%E0%B8%82%E0%B8%B2%E0%B8%95%E0%B8%B1%E0%B8%87%E0%B8%81%E0%B8%A7%E0%B8%99_-_panoramio_(1).jpg',
     photographer: '::::=UT=::::', license: 'CC BY-SA 3.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/',
   },
   watChalong: {
