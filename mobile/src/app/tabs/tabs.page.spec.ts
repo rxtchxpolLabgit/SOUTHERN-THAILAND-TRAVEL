@@ -23,4 +23,11 @@ describe('TabsPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('links every tab button to its routed page', () => {
+    const tabs = [...(fixture.nativeElement as HTMLElement).querySelectorAll('ion-tab-button')];
+    expect(tabs.map((tab) => tab.getAttribute('href'))).toEqual([
+      '/tabs/home', '/tabs/explore', '/tabs/events', '/tabs/map', '/tabs/favorites', '/tabs/trips',
+    ]);
+  });
 });
