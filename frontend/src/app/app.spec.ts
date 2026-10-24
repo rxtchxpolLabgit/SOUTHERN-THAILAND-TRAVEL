@@ -13,6 +13,10 @@ import { southernProvinces } from '../../../shared/data/provinces.data';
 
 describe('App', () => {
   beforeAll(() => {
+    Object.defineProperty(HTMLElement.prototype, 'scrollIntoView', {
+      configurable: true,
+      value: vi.fn(),
+    });
     Object.defineProperty(globalThis, 'IntersectionObserver', {
       configurable: true,
       value: class {
@@ -108,19 +112,18 @@ describe('App', () => {
 
   it('scrolls to the selected section when a navigation link is tapped', async () => {
     history.replaceState(null, '', '/');
-    const originalScrollTo = window.scrollTo;
-    const scrollTo = vi.fn();
-    Object.defineProperty(window, 'scrollTo', { configurable: true, value: scrollTo });
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();
     await fixture.whenStable();
 
     const compiled = fixture.nativeElement as HTMLElement;
+    const mapSection = compiled.querySelector<HTMLElement>('#map')!;
+    const scrollIntoView = vi.fn();
+    Object.defineProperty(mapSection, 'scrollIntoView', { configurable: true, value: scrollIntoView });
     compiled.querySelector<HTMLAnchorElement>('#main-navigation a[href="#map"]')?.click();
 
-    expect(scrollTo).toHaveBeenCalledWith({ top: expect.any(Number), behavior: 'smooth' });
+    expect(scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth', block: 'start' });
     expect(window.location.hash).toBe('#map');
-    Object.defineProperty(window, 'scrollTo', { configurable: true, value: originalScrollTo });
     fixture.destroy();
   });
 

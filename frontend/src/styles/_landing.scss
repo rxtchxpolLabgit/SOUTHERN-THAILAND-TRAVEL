@@ -1,6 +1,6 @@
 app-root {
   display: block;
-  overflow: hidden;
+  overflow-x: clip;
   --ink: var(--text);
   --blue: var(--color-primary);
   --ocean: var(--color-deep-ocean);

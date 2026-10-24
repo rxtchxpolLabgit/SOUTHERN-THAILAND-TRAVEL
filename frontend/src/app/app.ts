@@ -237,7 +237,7 @@ export class App {
   private scrollToSection(sectionId: string): void {
     const section = document.getElementById(sectionId);
     if (!section) return;
-    window.scrollTo({ top: section.getBoundingClientRect().top + window.scrollY, behavior: 'smooth' });
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   protected closeMobileMenuOnEscape(event: Event): void {
